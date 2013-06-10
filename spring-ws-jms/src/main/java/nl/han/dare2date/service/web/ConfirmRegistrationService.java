@@ -33,5 +33,8 @@ import nl.han.dare2date.applyregistrationservice.Registration;
  */
 public class ConfirmRegistrationService implements IConfirmRegistrationService {
 	public void confirm(Registration reg) {
+        if (reg == null) {
+            throw new IllegalArgumentException();
+        }
 	}
 }
