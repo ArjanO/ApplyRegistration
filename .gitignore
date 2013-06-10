@@ -1,0 +1,16 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Maven files #
+target/
+
+# IntelliJ IDEA files #
+.idea/
+*.iml
+
+# Project spring-ws #
+/spring-ws/src/main/webapp/service.properties
