@@ -31,17 +31,23 @@ import nl.han.dare2date.service.jms.util.JMSUtil;
 import nl.han.dare2date.service.jms.util.Queues;
 import nl.han.dare2date.service.jms.util.Replier;
 
+import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 import javax.naming.NamingException;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class ExternalCreditCardValidator extends Replier{
 
     private Creditcard cc = null;
 
-    public ExternalCreditCardValidator() throws JMSException, NamingException {
-        super(JMSUtil.getConnection(), Queues.REQUEST_QUEUE, Queues.REPLY_QUEUE);
+    public ExternalCreditCardValidator(Connection con) throws JMSException, NamingException {
+        super(con, Queues.REQUEST_QUEUE, Queues.REPLY_QUEUE);
     }
 
     @Override
@@ -57,10 +63,22 @@ public class ExternalCreditCardValidator extends Replier{
     }
 
     private boolean validateCreditCard(Creditcard cc) {
-        if(cc.getNumber() < 500) {
+        if(validateDate(cc) && cc.getNumber() < 500) {
             return true;
         }
         return false;
+    }
+
+    private boolean validateDate(Creditcard cc) {
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        DatatypeFactory datatypeFactory = null;
+        try {
+            datatypeFactory = DatatypeFactory.newInstance();
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+        XMLGregorianCalendar now = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
+        return cc.getValidThrough().compare(now) >= 0 ;
     }
 
     @Override
