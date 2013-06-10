@@ -31,7 +31,7 @@ import nl.han.dare2date.applyregistrationservice.Registration;
 /**
  * Publish the registration as a JMS topic.
  */
-public class ConfirmRegistrationService {
+public class ConfirmRegistrationService implements IConfirmRegistrationService {
 	public void confirm(Registration reg) {
 	}
 }
