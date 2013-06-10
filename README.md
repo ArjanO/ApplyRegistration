@@ -22,6 +22,9 @@ Copyright (c) 2013 HAN University of Applied Sciences
 Arjan Oortgiese
 Joëll Portier
 
+##Unit Testing
+Make sure you're running ActiveMQ when unit testing.
+
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
 files (the "Software"), to deal in the Software without
