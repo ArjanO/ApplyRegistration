@@ -10,6 +10,13 @@
 
 + [https://github.com/Sjoel](https://github.com/Sjoel)
 
+## ActiveMQ configuration
+
+Add the folowing queues in the admin console:
++ RequestQueue
++ ReplyQueue
++ InvalidQueue
+
 ## MIT License
 Copyright (c) 2013 HAN University of Applied Sciences
 Arjan Oortgiese
