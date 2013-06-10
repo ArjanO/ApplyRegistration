@@ -21,8 +21,8 @@
         <artifactId>maven-jetty-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>com.sun.tools.xjc.maven2</groupId>
-        <artifactId>maven-jaxb-plugin</artifactId>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
         <executions>
           <execution>
             <phase>generate-sources</phase>
@@ -34,6 +34,10 @@
         <configuration>
           <generatePackage>nl.han.dare2date.applyregistrationservice</generatePackage>
           <schemaDirectory>src/main/webapp/applyregistrationservice</schemaDirectory>
+          <bindingDirectory>src/main/resources</bindingDirectory>
+          <bindingIncludes>
+            <bindingInclude>jaxb-bindings.xjb</bindingInclude>
+          </bindingIncludes>
         </configuration>
       </plugin>
     </plugins>
