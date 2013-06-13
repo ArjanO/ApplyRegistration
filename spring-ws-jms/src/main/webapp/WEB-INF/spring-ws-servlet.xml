@@ -10,7 +10,7 @@ http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd http://www.springfr
 	<bean id="messageReceiver"
 		class="org.springframework.ws.soap.server.SoapMessageDispatcher" />
 
-    <bean id="logger" class="nl.han.dare2data.logger.Log4jWrapper" />
+    <bean id="logger" class="nl.han.dare2date.logger.Log4jWrapper" />
 
     <bean id="jmsPublisher" class="nl.han.dare2date.jms.JMSPublisher">
     </bean>

@@ -26,7 +26,7 @@
  */
 package nl.han.dare2date.service.web;
 
-import nl.han.dare2data.logger.ILogger;
+import nl.han.dare2date.logger.ILogger;
 import nl.han.dare2date.applyregistrationservice.Registration;
 import nl.han.dare2date.jms.IJMSPublisher;
 import nl.han.dare2date.jms.JMSPublisher;

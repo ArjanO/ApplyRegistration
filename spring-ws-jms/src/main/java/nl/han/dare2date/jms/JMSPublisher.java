@@ -26,7 +26,7 @@
  */
 package nl.han.dare2date.jms;
 
-import nl.han.dare2data.logger.ILogger;
+import nl.han.dare2date.logger.ILogger;
 import nl.han.dare2date.service.jms.util.JMSUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 

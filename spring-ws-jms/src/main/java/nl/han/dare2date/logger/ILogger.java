@@ -24,7 +24,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-package nl.han.dare2data.logger;
+package nl.han.dare2date.logger;
 
 /**
  * Logger interface.
