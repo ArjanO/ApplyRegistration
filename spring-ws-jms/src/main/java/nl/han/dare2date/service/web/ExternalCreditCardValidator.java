@@ -42,7 +42,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class ExternalCreditCardValidator extends Replier{
+public class ExternalCreditCardValidator extends Replier implements IExternalCreditCardValidator {
 
     private Creditcard cc = null;
 

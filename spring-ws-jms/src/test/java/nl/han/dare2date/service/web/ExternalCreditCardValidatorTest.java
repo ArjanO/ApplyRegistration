@@ -29,8 +29,6 @@ package nl.han.dare2date.service.web;
 import junit.framework.Assert;
 import nl.han.dare2date.applyregistrationservice.Creditcard;
 import nl.han.dare2date.service.jms.util.JMSUtil;
-import org.easymock.EasyMock;
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.jms.Connection;
@@ -43,7 +41,7 @@ import java.util.GregorianCalendar;
 
 public class ExternalCreditCardValidatorTest {
 
-    private ExternalCreditCardValidator validator;
+    private IExternalCreditCardValidator validator;
 
     @Test
     public void testValidateWithValidInformation() {
@@ -55,7 +53,7 @@ public class ExternalCreditCardValidatorTest {
         } catch (NamingException e) {
             Assert.fail();
         }
-        ExternalCreditCardValidator ecv = null;
+        IExternalCreditCardValidator ecv = null;
         try {
             ecv = new ExternalCreditCardValidator(connection);
         }   catch(Exception e){
@@ -97,7 +95,7 @@ public class ExternalCreditCardValidatorTest {
         } catch (NamingException e) {
             Assert.fail();
         }
-        ExternalCreditCardValidator ecv = null;
+        IExternalCreditCardValidator ecv = null;
         try {
             ecv = new ExternalCreditCardValidator(connection);
         }   catch(Exception e){
@@ -139,7 +137,7 @@ public class ExternalCreditCardValidatorTest {
         } catch (NamingException e) {
             Assert.fail();
         }
-        ExternalCreditCardValidator ecv = null;
+        IExternalCreditCardValidator ecv = null;
         try {
             ecv = new ExternalCreditCardValidator(connection);
         }   catch(Exception e){
