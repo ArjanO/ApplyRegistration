@@ -26,15 +26,57 @@
  */
 package nl.han.dare2date.service.web;
 
+import nl.han.dare2data.logger.ILogger;
 import nl.han.dare2date.applyregistrationservice.Registration;
+import nl.han.dare2date.jms.IJMSPublisher;
+import nl.han.dare2date.jms.JMSPublisher;
+import nl.han.dare2date.service.jms.util.JMSUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.jms.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Publish the registration as a JMS topic.
  */
 public class ConfirmRegistrationService implements IConfirmRegistrationService {
-	public void confirm(Registration reg) {
+    private ILogger logger;
+
+    private IJMSPublisher publisher;
+
+    /**
+     * Set logger.
+     *
+     * @param logger Logger.
+     */
+    @Autowired
+    public void setLogger(ILogger logger) {
+        this.logger = logger;
+    }
+
+    /**
+     * Set JMS publisher.
+     * @param publisher JMS publisher.
+     */
+    public void setPublisher(IJMSPublisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public void confirm(Registration reg) {
         if (reg == null) {
             throw new IllegalArgumentException();
         }
-	}
+
+        publisher.connect("registered");
+
+        ObjectMessage msg = publisher.createObjectMessage(reg);
+
+        if (msg != null) {
+            publisher.send(msg);
+        }
+    }
 }
