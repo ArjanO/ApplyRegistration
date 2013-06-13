@@ -30,6 +30,14 @@ import javax.jms.ObjectMessage;
 
 public interface IJMSPublisher {
     /**
+     * Connect to the broker and open the topic.
+     *
+     * @param topicName Topic to open.
+     * @return true if succeeded.
+     */
+    boolean connect(String topicName);
+
+    /**
      * Send a message to the topic or queue.
      *
      * @param message Message to publish in te topic or queue.
