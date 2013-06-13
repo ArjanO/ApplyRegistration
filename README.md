@@ -17,10 +17,14 @@ Add the folowing queues in the admin console:
 + ReplyQueue
 + InvalidQueue
 
+##Unit Testing
+Make sure you're running ActiveMQ when unit testing.
+
 ## MIT License
 Copyright (c) 2013 HAN University of Applied Sciences
 Arjan Oortgiese
 Joëll Portier
+
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
