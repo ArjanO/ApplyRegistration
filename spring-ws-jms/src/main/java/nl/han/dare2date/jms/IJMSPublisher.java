@@ -38,6 +38,13 @@ public interface IJMSPublisher {
     boolean connect(String topicName);
 
     /**
+     * Disconnect from the broker and the topic.
+     *
+     * @return true if succeeded.
+     */
+    boolean disconnect();
+
+    /**
      * Send a message to the topic or queue.
      *
      * @param message Message to publish in te topic or queue.
