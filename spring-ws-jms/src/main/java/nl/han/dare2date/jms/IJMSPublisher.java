@@ -26,7 +26,10 @@
  */
 package nl.han.dare2date.jms;
 
+import com.sun.xml.internal.ws.encoding.soap.SerializationException;
+
 import javax.jms.ObjectMessage;
+import java.io.Serializable;
 
 public interface IJMSPublisher {
     /**
@@ -43,6 +46,14 @@ public interface IJMSPublisher {
      * @return true if succeeded.
      */
     boolean disconnect();
+
+    /**
+     * Create a message object.
+     *
+     * @param item Serializable item.
+     * @return Created ObjectMesssage instance.
+     */
+    ObjectMessage createObjectMessage(Serializable item);
 
     /**
      * Send a message to the topic or queue.
