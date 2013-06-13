@@ -29,16 +29,9 @@ package nl.han.dare2date.service.web;
 import nl.han.dare2date.logger.ILogger;
 import nl.han.dare2date.applyregistrationservice.Registration;
 import nl.han.dare2date.jms.IJMSPublisher;
-import nl.han.dare2date.jms.JMSPublisher;
-import nl.han.dare2date.service.jms.util.JMSUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.jms.*;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import java.io.IOException;
-import java.util.Properties;
+import javax.jms.ObjectMessage;
 
 /**
  * Publish the registration as a JMS topic.
