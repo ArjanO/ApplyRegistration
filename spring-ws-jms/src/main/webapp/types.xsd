@@ -23,7 +23,7 @@
     
     <complexType name="Creditcard">
         <sequence>
-            <element name="number" type="int"/>
+            <element name="number" type="long"/>
             <element name="cvc" type="int"/>
             <element name="validThrough" type="dateTime"/>
         </sequence>

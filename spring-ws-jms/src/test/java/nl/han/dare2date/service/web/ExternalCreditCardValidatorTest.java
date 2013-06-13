@@ -60,7 +60,7 @@ public class ExternalCreditCardValidatorTest {
             Assert.fail();
         }
         Creditcard cc = new Creditcard();
-        cc.setNumber(400);
+        cc.setNumber(4539339738582406L);
         cc.setCvc(123);
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = null;
@@ -74,7 +74,7 @@ public class ExternalCreditCardValidatorTest {
         cc.setValidThrough(date);
         ecv.handleMessage(cc);
         try {
-            Assert.assertTrue(ecv.getReplyMessage().getBooleanProperty("valid"));
+            Assert.assertFalse(ecv.getReplyMessage().getBooleanProperty("valid"));
         } catch (JMSException e) {
             Assert.fail();
         }
@@ -102,7 +102,7 @@ public class ExternalCreditCardValidatorTest {
             Assert.fail();
         }
         Creditcard cc = new Creditcard();
-        cc.setNumber(400);
+        cc.setNumber(4539339738582406L);
         cc.setCvc(123);
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = null;
@@ -144,7 +144,7 @@ public class ExternalCreditCardValidatorTest {
             Assert.fail();
         }
         Creditcard cc = new Creditcard();
-        cc.setNumber(600);
+        cc.setNumber(4539339738582405L);
         cc.setCvc(123);
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = null;
