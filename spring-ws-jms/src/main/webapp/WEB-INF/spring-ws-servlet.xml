@@ -4,12 +4,24 @@
 	xmlns:oxm="http://www.springframework.org/schema/oxm"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/oxm
 http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/webservices-1.5.xsd">
-	<bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory" />
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+    <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory" />
 	<bean id="messageReceiver"
 		class="org.springframework.ws.soap.server.SoapMessageDispatcher" />
-	<bean id="schemaCollection"
+
+    <bean id="logger" class="nl.han.dare2data.logger.Log4jWrapper" />
+
+    <bean id="jmsPublisher" class="nl.han.dare2date.jms.JMSPublisher">
+    </bean>
+
+    <bean id="confirmRegistrationService" class="nl.han.dare2date.service.web.ConfirmRegistrationService">
+        <property name="publisher" ref="jmsPublisher" />
+    </bean>
+
+    <bean id="schemaCollection"
 		class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
-		<property name="xsds">
+        <property name="xsds">
 			<list>
 				<value>/applyregistrationservice/messages.xsd</value>
 			</list>
@@ -19,6 +31,7 @@ http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd http://www.springfr
 	<bean id="applyregistration" class="nl.han.dare2date.service.web.ApplyRegistrationServiceEndpoint">
 		<constructor-arg ref="marshaller" />
 		<constructor-arg ref="unmarshaller" />
+        <property name="confirmRegistrationService" ref="confirmRegistrationService" />
 	</bean>
 	<bean
 		class="org.springframework.ws.server.endpoint.adapter.MarshallingMethodEndpointAdapter">

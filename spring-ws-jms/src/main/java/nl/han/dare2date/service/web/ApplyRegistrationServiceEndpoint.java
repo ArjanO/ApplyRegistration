@@ -13,15 +13,23 @@ public class ApplyRegistrationServiceEndpoint {
 	private Marshaller marshaller;
 	private Unmarshaller unmarshaller;
 
+    private IConfirmRegistrationService confirmRegistrationService;
+
 	public ApplyRegistrationServiceEndpoint(Marshaller marshaller,
 			Unmarshaller unmarshaller) {
 		this.marshaller = marshaller;
 		this.unmarshaller = unmarshaller;
 	}
 
+    public void setConfirmRegistrationService(IConfirmRegistrationService confirmRegistrationService) {
+        this.confirmRegistrationService = confirmRegistrationService;
+    }
+
 	@SuppressWarnings( { "unchecked", "deprecation" })
 	@PayloadRoot(localPart = "ApplyRegistrationRequest", namespace = "http://www.han.nl/schemas/messages")
 	public ApplyRegistrationResponse applyRegistration(ApplyRegistrationRequest req) {
+        confirmRegistrationService.confirm(req.getRegistration());
+
 		return new ApplyRegistrationResponse();
 	}
 }
