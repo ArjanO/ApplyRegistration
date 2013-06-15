@@ -28,6 +28,7 @@ package nl.han.dare2date.jms;
 
 import nl.han.dare2date.logger.ILogger;
 import nl.han.dare2date.service.jms.util.JMSUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jms.*;
 import javax.naming.Context;
@@ -43,6 +44,7 @@ public class JMSSubscriber implements IJMSSubscriber {
     private Session session;
     private MessageConsumer subscriber;
 
+    @Autowired
     public void setLogger(ILogger logger) {
         this.logger = logger;
     }
