@@ -41,8 +41,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.List;
 
-public class ExternalCreditCardValidator extends Replier{
+public class ExternalCreditCardValidator extends Replier implements IExternalCreditCardValidator {
 
     private Creditcard cc = null;
 
@@ -63,10 +65,40 @@ public class ExternalCreditCardValidator extends Replier{
     }
 
     private boolean validateCreditCard(Creditcard cc) {
-        if(validateDate(cc) && cc.getNumber() < 500) {
-            return true;
+        return validateDate(cc) && validateCreditCardNumber(cc);
+    }
+
+    private boolean validateCreditCardNumber(Creditcard cc) {
+        List<Long> numbers = longToList(cc.getNumber());
+        Long result = 0L;
+        for(int i = 0;i < numbers.size();i++) {
+            if(i%2 == 1) {
+                if(((numbers.get(i) * 2) <= 9)) {
+                result += (numbers.get(i)*2);
+                } else {
+                    List<Long> rest = longToList((numbers.get(i)*2));
+                    result += rest.get(0) + rest.get(1) ;
+                }
+            } else {
+                result += numbers.get(i);
+            }
         }
-        return false;
+        return result%10 == 0;
+    }
+
+    private List<Long> longToList(long num) {
+        LinkedList<Long> numbers = new LinkedList<Long>();
+        numbers.addFirst(num%10);
+        return longToList(num/10,numbers);
+    }
+
+    private List<Long> longToList(long num, LinkedList<Long> numbers) {
+        numbers.addFirst(num%10);
+        if(num < 10) {
+            return numbers;
+        } else {
+            return longToList(num/10,numbers);
+        }
     }
 
     private boolean validateDate(Creditcard cc) {

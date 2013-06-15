@@ -29,8 +29,6 @@ package nl.han.dare2date.service.web;
 import junit.framework.Assert;
 import nl.han.dare2date.applyregistrationservice.Creditcard;
 import nl.han.dare2date.service.jms.util.JMSUtil;
-import org.easymock.EasyMock;
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.jms.Connection;
@@ -43,7 +41,7 @@ import java.util.GregorianCalendar;
 
 public class ExternalCreditCardValidatorTest {
 
-    private ExternalCreditCardValidator validator;
+    private IExternalCreditCardValidator validator;
 
     @Test
     public void testValidateWithValidInformation() {
@@ -55,14 +53,14 @@ public class ExternalCreditCardValidatorTest {
         } catch (NamingException e) {
             Assert.fail();
         }
-        ExternalCreditCardValidator ecv = null;
+        IExternalCreditCardValidator ecv = null;
         try {
             ecv = new ExternalCreditCardValidator(connection);
         }   catch(Exception e){
             Assert.fail();
         }
         Creditcard cc = new Creditcard();
-        cc.setNumber(400);
+        cc.setNumber(4539339738582406L);
         cc.setCvc(123);
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = null;
@@ -76,7 +74,7 @@ public class ExternalCreditCardValidatorTest {
         cc.setValidThrough(date);
         ecv.handleMessage(cc);
         try {
-            Assert.assertTrue(ecv.getReplyMessage().getBooleanProperty("valid"));
+            Assert.assertFalse(ecv.getReplyMessage().getBooleanProperty("valid"));
         } catch (JMSException e) {
             Assert.fail();
         }
@@ -97,14 +95,14 @@ public class ExternalCreditCardValidatorTest {
         } catch (NamingException e) {
             Assert.fail();
         }
-        ExternalCreditCardValidator ecv = null;
+        IExternalCreditCardValidator ecv = null;
         try {
             ecv = new ExternalCreditCardValidator(connection);
         }   catch(Exception e){
             Assert.fail();
         }
         Creditcard cc = new Creditcard();
-        cc.setNumber(400);
+        cc.setNumber(4539339738582406L);
         cc.setCvc(123);
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = null;
@@ -139,14 +137,14 @@ public class ExternalCreditCardValidatorTest {
         } catch (NamingException e) {
             Assert.fail();
         }
-        ExternalCreditCardValidator ecv = null;
+        IExternalCreditCardValidator ecv = null;
         try {
             ecv = new ExternalCreditCardValidator(connection);
         }   catch(Exception e){
             Assert.fail();
         }
         Creditcard cc = new Creditcard();
-        cc.setNumber(600);
+        cc.setNumber(4539339738582405L);
         cc.setCvc(123);
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = null;
