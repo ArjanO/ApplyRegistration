@@ -26,19 +26,74 @@
  */
 package nl.han.dare2date.service.web;
 
+import nl.han.dare2date.applyregistrationservice.Registration;
+import nl.han.dare2date.jms.IJMSPublisher;
+import org.easymock.EasyMock;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.jms.ObjectMessage;
+
 public class ConfirmRegistrationServiceTest {
+    private IJMSPublisher publisher;
+    private ObjectMessage msg;
     private ConfirmRegistrationService service;
 
     @Before
     public void before() {
         service = new ConfirmRegistrationService();
+
+        publisher = EasyMock.createMock(IJMSPublisher.class);
+        msg = null;
+
+        service.setPublisher(publisher);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConfirm() {
+    public void testConfirmNull() {
+        EasyMock.replay(publisher);
+
         service.confirm(null);
+    }
+
+    @Test
+    public void testConfirm() {
+        msg = EasyMock.createMock(ObjectMessage.class);
+
+        EasyMock.expect(publisher.connect("registered"))
+                .andReturn(true).once();
+
+        EasyMock.expect(publisher.createObjectMessage(EasyMock.isA(Registration.class))).andReturn(msg).once();
+
+        EasyMock.expect(publisher.send(msg)).andReturn(true).once();
+
+        EasyMock.replay(publisher);
+        EasyMock.replay(msg);
+
+        service.confirm(new Registration());
+    }
+
+    @Test
+    public void testNoObjectMessage() {
+        EasyMock.expect(publisher.connect("registered"))
+                .andReturn(true).once();
+
+        EasyMock.expect(publisher.createObjectMessage(EasyMock.isA(Registration.class))).andReturn(null).once();
+
+        EasyMock.replay(publisher);
+
+        service.confirm(new Registration());
+    }
+
+    @After
+    public void after() {
+        if (publisher != null) {
+            EasyMock.verify(publisher);
+        }
+
+        if (msg != null) {
+            EasyMock.verify(msg);
+        }
     }
 }
