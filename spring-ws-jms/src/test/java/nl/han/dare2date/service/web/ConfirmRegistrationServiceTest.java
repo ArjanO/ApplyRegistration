@@ -32,18 +32,24 @@ import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.jms.ObjectMessage;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring-ws-servlet.xml")
 public class ConfirmRegistrationServiceTest {
     private IJMSPublisher publisher;
     private ObjectMessage msg;
+
+    @Autowired
     private ConfirmRegistrationService service;
 
     @Before
     public void before() {
-        service = new ConfirmRegistrationService();
-
         publisher = EasyMock.createMock(IJMSPublisher.class);
         msg = null;
 
