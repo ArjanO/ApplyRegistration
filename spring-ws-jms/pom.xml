@@ -6,6 +6,11 @@
   <name>Dare2Date Apply Registration Service</name>
   <version>1.0</version>
   <url>http://www.springframework.org/spring-ws</url>
+
+  <properties>
+    <org.springframework-version>3.2.3.RELEASE</org.springframework-version>
+  </properties>
+
   <build>
     <finalName>applyregistrationservice</finalName>
     <plugins>
@@ -94,6 +99,17 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${org.springframework-version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${org.springframework-version}</version>
     </dependency>
   </dependencies>
 </project>
