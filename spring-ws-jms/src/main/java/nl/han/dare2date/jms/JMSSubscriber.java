@@ -43,10 +43,20 @@ public class JMSSubscriber implements IJMSSubscriber {
     private Connection connection;
     private Session session;
     private MessageConsumer subscriber;
+    private String clientID;
 
     @Autowired
     public void setLogger(ILogger logger) {
         this.logger = logger;
+    }
+
+    /**
+     * Set the client ID.
+     *
+     * @param clientID Client ID.
+     */
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
     }
 
     public boolean connect() {
@@ -60,7 +70,11 @@ public class JMSSubscriber implements IJMSSubscriber {
             return false;
         }
 
-        connection = JMSUtil.getConnection("1234");
+        if (clientID != null) {
+            connection = JMSUtil.getConnection();
+        } else {
+            connection = JMSUtil.getConnection(clientID);
+        }
 
         try {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);

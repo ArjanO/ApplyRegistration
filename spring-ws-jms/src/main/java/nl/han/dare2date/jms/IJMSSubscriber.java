@@ -30,6 +30,13 @@ import javax.jms.MessageListener;
 
 public interface IJMSSubscriber {
     /**
+     * Set the client ID.
+     *
+     * @param clientID Client ID.
+     */
+    void setClientID(String clientID);
+
+    /**
      * Connect to the JMS broker.
      *
      * @return True if connected.
