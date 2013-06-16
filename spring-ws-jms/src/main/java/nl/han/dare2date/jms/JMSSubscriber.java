@@ -70,7 +70,7 @@ public class JMSSubscriber implements IJMSSubscriber {
             return false;
         }
 
-        if (clientID != null) {
+        if (clientID == null) {
             connection = JMSUtil.getConnection();
         } else {
             connection = JMSUtil.getConnection(clientID);
