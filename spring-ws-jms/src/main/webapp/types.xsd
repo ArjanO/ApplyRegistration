@@ -18,6 +18,7 @@
             <element name="firstname" type="string"/>
             <element name="lastname" type="string"/>
             <element name="card" type="tns:Creditcard"/>
+            <element name="email" type="string" />
         </sequence>
     </complexType>
     
