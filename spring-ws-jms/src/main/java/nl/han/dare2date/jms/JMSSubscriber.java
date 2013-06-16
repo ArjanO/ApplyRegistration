@@ -44,6 +44,7 @@ public class JMSSubscriber implements IJMSSubscriber {
     private Session session;
     private MessageConsumer subscriber;
     private String clientID;
+    private String subscriberName;
 
     @Autowired
     public void setLogger(ILogger logger) {
@@ -57,6 +58,10 @@ public class JMSSubscriber implements IJMSSubscriber {
      */
     public void setClientID(String clientID) {
         this.clientID = clientID;
+    }
+
+    public void setSubscriberName(String subscriberName) {
+        this.subscriberName = subscriberName;
     }
 
     public boolean connect() {
@@ -96,7 +101,7 @@ public class JMSSubscriber implements IJMSSubscriber {
         }
 
         try {
-            subscriber =  session.createDurableSubscriber(topic, "jan");
+            subscriber =  session.createDurableSubscriber(topic, subscriberName);
         } catch (JMSException e) {
             logger.error("Can't create consumer", e);
             return false;

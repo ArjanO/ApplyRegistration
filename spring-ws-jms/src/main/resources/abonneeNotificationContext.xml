@@ -16,6 +16,7 @@
 
     <bean id="jmsSubscriber" class="nl.han.dare2date.jms.JMSSubscriber">
         <property name="clientID" value="${subscriber.clientid}" />
+        <property name="subscriberName" value="${subscriber.name}" />
     </bean>
 
     <bean id="abonneeNotification" class="nl.han.dare2date.service.AbonneeNotification">
