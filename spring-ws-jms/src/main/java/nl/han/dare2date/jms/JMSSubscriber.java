@@ -66,7 +66,7 @@ public class JMSSubscriber implements IJMSSubscriber {
 
     public boolean connect() {
         try {
-            context = getContext();
+            context = JMSUtil.getContext();
         } catch (NamingException e) {
             logger.error("Can't create context", e);
             return false;
@@ -122,12 +122,5 @@ public class JMSSubscriber implements IJMSSubscriber {
         }
 
         return false;
-    }
-
-    private static Context getContext() throws NamingException, IOException {
-        Properties props = new Properties();
-        props.load(JMSUtil.class.getClassLoader().
-                getResourceAsStream("jndi.properties"));
-        return new InitialContext(props);
     }
 }

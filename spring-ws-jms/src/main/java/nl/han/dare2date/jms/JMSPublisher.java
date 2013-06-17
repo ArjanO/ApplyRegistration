@@ -58,7 +58,7 @@ public class JMSPublisher implements IJMSPublisher {
 
     public boolean connect(String topicName) {
         try {
-            context = getContext();
+            context = JMSUtil.getContext();
         } catch (NamingException e) {
             logger.error("Can't create context", e);
             return false;
@@ -134,12 +134,5 @@ public class JMSPublisher implements IJMSPublisher {
         }
 
         return false;
-    }
-
-    private static Context getContext() throws NamingException, IOException {
-        Properties props = new Properties();
-        props.load(JMSUtil.class.getClassLoader().
-                getResourceAsStream("jndi.properties"));
-        return new InitialContext(props);
     }
 }

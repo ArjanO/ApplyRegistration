@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 public class JMSUtil {
-	private static Context getContext() throws NamingException, IOException
+	public static Context getContext() throws NamingException, IOException
 	{
 		Properties props = new Properties();
         props.load(JMSUtil.class.getClassLoader().
