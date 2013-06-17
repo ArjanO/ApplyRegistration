@@ -55,13 +55,6 @@ public class UserNotification implements MessageListener {
         ApplicationContext context = new ClassPathXmlApplicationContext("userNotificationContext.xml");
 
         UserNotification userNotification = context.getBean("userNotification", UserNotification.class);
-
-        while(true) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-        }
     }
 
     public UserNotification(IJMSSubscriber subscriber) {

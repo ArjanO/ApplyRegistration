@@ -49,13 +49,6 @@ public class AbonneeNotification implements MessageListener {
         ApplicationContext context = new ClassPathXmlApplicationContext("abonneeNotificationContext.xml");
 
         AbonneeNotification abonneeNotification = context.getBean("abonneeNotification", AbonneeNotification.class);
-
-        while(true) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-            }
-        }
     }
 
     public AbonneeNotification(IJMSSubscriber subscriber) {
