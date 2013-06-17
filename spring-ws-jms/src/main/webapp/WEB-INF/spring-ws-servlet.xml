@@ -15,6 +15,9 @@ http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd http://www.springfr
     <bean id="jmsPublisher" class="nl.han.dare2date.jms.JMSPublisher">
     </bean>
 
+    <bean id="validateCreditcardService" class="nl.han.dare2date.service.web.ValidateCreditcardService">
+    </bean>
+
     <bean id="confirmRegistrationService" class="nl.han.dare2date.service.web.ConfirmRegistrationService">
         <property name="publisher" ref="jmsPublisher" />
     </bean>
@@ -32,7 +35,8 @@ http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd http://www.springfr
 		<constructor-arg ref="marshaller" />
 		<constructor-arg ref="unmarshaller" />
         <property name="confirmRegistrationService" ref="confirmRegistrationService" />
-	</bean>
+	    <property name="validateCreditcardService" ref="validateCreditcardService" />
+    </bean>
 	<bean
 		class="org.springframework.ws.server.endpoint.adapter.MarshallingMethodEndpointAdapter">
 		<constructor-arg ref="marshaller" />

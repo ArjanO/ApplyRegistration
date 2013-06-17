@@ -42,7 +42,7 @@ import java.io.Serializable;
  *
  * Is used as a JMS client using request-reply
  */
-public class ValidateCreditcardService extends Requestor {
+public class ValidateCreditcardService extends Requestor implements IValidateCreditcardService {
 
     private Creditcard cc;
 
@@ -57,7 +57,6 @@ public class ValidateCreditcardService extends Requestor {
             this.send();
             this.receiveSync();
             isValid = getReplyMessage().getBooleanProperty("valid");
-            getSession().close();
         } catch(JMSException e) {
             e.printStackTrace();
         }
