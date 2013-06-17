@@ -48,6 +48,16 @@ public class ExternalCreditCardValidator extends Replier implements IExternalCre
 
     private Creditcard cc = null;
 
+    public static void main(String args[]) {
+        try {
+            new ExternalCreditCardValidator(JMSUtil.getConnection());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ExternalCreditCardValidator(Connection con) throws JMSException, NamingException {
         super(con, Queues.REQUEST_QUEUE, Queues.REPLY_QUEUE);
     }
@@ -71,10 +81,10 @@ public class ExternalCreditCardValidator extends Replier implements IExternalCre
     private boolean validateCreditCardNumber(Creditcard cc) {
         List<Long> numbers = longToList(cc.getNumber());
         Long result = 0L;
-        for(int i = 0;i < numbers.size();i++) {
+        for(int i = 0;i < numbers.size() - 1;i++) {
             if(i%2 == 1) {
                 if(((numbers.get(i) * 2) <= 9)) {
-                result += (numbers.get(i)*2);
+                    result += (numbers.get(i)*2);
                 } else {
                     List<Long> rest = longToList((numbers.get(i)*2));
                     result += rest.get(0) + rest.get(1) ;
@@ -83,7 +93,7 @@ public class ExternalCreditCardValidator extends Replier implements IExternalCre
                 result += numbers.get(i);
             }
         }
-        return result%10 == 0;
+        return result * 9 % 10 == numbers.get(numbers.size() - 1);
     }
 
     private List<Long> longToList(long num) {

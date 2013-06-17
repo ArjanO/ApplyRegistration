@@ -102,7 +102,7 @@ public class ExternalCreditCardValidatorTest {
             Assert.fail();
         }
         Creditcard cc = new Creditcard();
-        cc.setNumber(4539339738582406L);
+        cc.setNumber(79927398713L);
         cc.setCvc(123);
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         DatatypeFactory datatypeFactory = null;
@@ -112,11 +112,11 @@ public class ExternalCreditCardValidatorTest {
             Assert.fail();
         }
         XMLGregorianCalendar date = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
-        date.setYear(2001);
+        date.setYear(2020);
         cc.setValidThrough(date);
         ecv.handleMessage(cc);
         try {
-            Assert.assertFalse(ecv.getReplyMessage().getBooleanProperty("valid"));
+            Assert.assertTrue(ecv.getReplyMessage().getBooleanProperty("valid"));
         } catch (JMSException e) {
             Assert.fail();
         }
