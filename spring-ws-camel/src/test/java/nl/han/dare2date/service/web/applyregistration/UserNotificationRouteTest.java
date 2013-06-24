@@ -28,23 +28,35 @@ package nl.han.dare2date.service.web.applyregistration;
 
 import nl.han.dare2date.service.web.applyregistration.model.ApplyRegistrationResponse;
 import nl.han.dare2date.service.web.applyregistration.model.Registration;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
+import nl.han.dare2date.service.web.applyregistration.model.User;
+import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Test;
 
-public class UserNotificationRoute extends RouteBuilder {
+public class UserNotificationRouteTest extends CamelTestSupport {
     @Override
-    public void configure() throws Exception {
-        from("activemq:topic:registered?jmsMessageType=Object&durableSubscriptionName=userNotification&clientId=12345").from("direct:sendfile")
-                .process(new UserNotification())
-                ;
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new UserNotificationRoute();
     }
 
-    private static final class UserNotification implements Processor {
-        public void process(Exchange exchange) throws Exception {
-            Registration r = exchange.getIn().getBody(ApplyRegistrationResponse.class).getRegistration();
+    @Test
+    public void testOutboxContainsFile() throws Exception {
+        context.getRouteDefinitions().get(0).adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                mockEndpointsAndSkip();
+            }
+        });
 
-            System.out.println(r.getUser().getFirstname());
-        }
+        Registration registration = new Registration();
+        registration.setUser(new User());
+
+        ApplyRegistrationResponse request = new ApplyRegistrationResponse();
+        request.setRegistration(registration);
+
+        template.sendBody("direct:sendfile", request);
+
+        assertMockEndpointsSatisfied();
     }
 }
