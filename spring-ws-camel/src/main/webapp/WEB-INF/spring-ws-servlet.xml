@@ -6,6 +6,14 @@
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>applyregistration.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <!-- === Route(s) ==== -->
     <camel:camelContext id="camelContext">
         <camel:routeBuilder ref="applyRegistrationRoute"/>
@@ -15,7 +23,28 @@
 
     <bean id="applyRegistrationRoute" class="nl.han.dare2date.service.web.applyregistration.ApplyRegistrationRoute"/>
     <bean id="creditCardValidatorRoute" class="nl.han.dare2date.service.web.applyregistration.CreditCardValidatorRoute" />
-    <bean id="userNotificationRoute" class="nl.han.dare2date.service.web.applyregistration.UserNotificationRoute" />
+    <bean id="userNotificationRoute" class="nl.han.dare2date.service.web.applyregistration.UserNotificationRoute">
+        <property name="notifier" ref="userNotifier" />
+    </bean>
+
+    <bean id="userNotifier" class="nl.han.dare2date.service.notifier.UserNotifier">
+        <property name="fromEmail" value="${registration.from}" />
+        <property name="mailSender" ref="mailSender" />
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="username" value="${mail.username}" />
+        <property name="password" value="${mail.password}" />
+
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">${mail.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${mail.starttls}</prop>
+            </props>
+        </property>
+    </bean>
 
     <!-- === Endpoint mapping(s) ==== -->
     <bean id="applyRegistrationEndpointMapping" class="org.apache.camel.component.spring.ws.bean.CamelEndpointMapping">

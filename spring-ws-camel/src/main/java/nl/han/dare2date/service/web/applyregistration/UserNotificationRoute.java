@@ -26,6 +26,7 @@
  */
 package nl.han.dare2date.service.web.applyregistration;
 
+import nl.han.dare2date.service.notifier.UserNotifier;
 import nl.han.dare2date.service.web.applyregistration.model.ApplyRegistrationResponse;
 import nl.han.dare2date.service.web.applyregistration.model.Registration;
 import org.apache.camel.Exchange;
@@ -33,18 +34,22 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 public class UserNotificationRoute extends RouteBuilder {
+    private UserNotifier notifier;
+
+    public void setNotifier(UserNotifier notifier) {
+        this.notifier = notifier;
+    }
+
     @Override
     public void configure() throws Exception {
         from("activemq:topic:registered?jmsMessageType=Object&durableSubscriptionName=userNotification&clientId=12345").from("direct:sendfile")
-                .process(new UserNotification())
+                .process(new Processor() {
+                    public void process(Exchange exchange) throws Exception {
+                        Registration r = exchange.getIn().getBody(ApplyRegistrationResponse.class).getRegistration();
+
+                        notifier.notify(r);
+                    }
+                })
                 ;
-    }
-
-    private static final class UserNotification implements Processor {
-        public void process(Exchange exchange) throws Exception {
-            Registration r = exchange.getIn().getBody(ApplyRegistrationResponse.class).getRegistration();
-
-            System.out.println(r.getUser().getFirstname());
-        }
     }
 }
