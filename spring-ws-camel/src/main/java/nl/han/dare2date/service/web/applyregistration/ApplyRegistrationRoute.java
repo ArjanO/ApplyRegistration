@@ -28,7 +28,9 @@ package nl.han.dare2date.service.web.applyregistration;
 
 import nl.han.dare2date.service.web.applyregistration.model.ApplyRegistrationRequest;
 import nl.han.dare2date.service.web.applyregistration.model.ApplyRegistrationResponse;
+import nl.han.dare2date.service.web.applyregistration.model.Registration;
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
@@ -41,7 +43,11 @@ public class ApplyRegistrationRoute extends RouteBuilder {
         from("spring-ws:rootqname:{http://www.han.nl/schemas/messages}ApplyRegistrationRequest?endpointMapping=#applyRegistrationEndpointMapping")
                 .unmarshal(jaxb)
                 .to("activemq:queue:RequestQueue?jmsMessageType=Object")
+                .filter()
+                    .simple("${body.getRegistration.isSuccesFul}").inOnly("activemq:topic:registered?jmsMessageType=Object&disableReplyTo=true")
+                    .end()
                 .marshal(jaxb)
-                ;
+        ;
     }
+
 }
