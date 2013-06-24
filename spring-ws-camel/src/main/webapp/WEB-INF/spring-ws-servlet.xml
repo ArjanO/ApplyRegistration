@@ -10,10 +10,12 @@
     <camel:camelContext id="camelContext">
         <camel:routeBuilder ref="applyRegistrationRoute"/>
         <camel:routeBuilder ref="creditCardValidatorRoute"/>
+        <camel:routeBuilder ref="userNotificationRoute" />
     </camel:camelContext>
 
     <bean id="applyRegistrationRoute" class="nl.han.dare2date.service.web.applyregistration.ApplyRegistrationRoute"/>
     <bean id="creditCardValidatorRoute" class="nl.han.dare2date.service.web.applyregistration.CreditCardValidatorRoute" />
+    <bean id="userNotificationRoute" class="nl.han.dare2date.service.web.applyregistration.UserNotificationRoute" />
 
     <!-- === Endpoint mapping(s) ==== -->
     <bean id="applyRegistrationEndpointMapping" class="org.apache.camel.component.spring.ws.bean.CamelEndpointMapping">
