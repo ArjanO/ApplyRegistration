@@ -28,20 +28,24 @@ package nl.han.dare2date.service.web.applyregistration;
 
 import nl.han.dare2date.service.web.applyregistration.model.ApplyRegistrationRequest;
 import nl.han.dare2date.service.web.applyregistration.model.ApplyRegistrationResponse;
+import nl.han.dare2date.service.web.applyregistration.model.Registration;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.converter.jaxb.JaxbDataFormat;
 
-public class ApplyRegistrationRoute extends RouteBuilder {
+public class CreditCardValidatorRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        JaxbDataFormat jaxb = new JaxbDataFormat(ApplyRegistrationRequest.class.getPackage().getName());
+        from("activemq:queue:RequestQueue")
+            .process(new Echo());
+    }
 
-        from("spring-ws:rootqname:{http://www.han.nl/schemas/messages}ApplyRegistrationRequest?endpointMapping=#applyRegistrationEndpointMapping")
-                .unmarshal(jaxb)
-                .to("activemq:queue:RequestQueue?jmsMessageType=Object")
-                .marshal(jaxb)
-                ;
+    private static final class Echo implements Processor {
+        public void process(Exchange exchange) throws Exception {
+            ApplyRegistrationResponse registrationResponse = new ApplyRegistrationResponse();
+            Registration r = exchange.getIn().getBody(ApplyRegistrationRequest.class).getRegistration();
+            registrationResponse.setRegistration(r);
+            exchange.getOut().setBody(registrationResponse);
+        }
     }
 }
