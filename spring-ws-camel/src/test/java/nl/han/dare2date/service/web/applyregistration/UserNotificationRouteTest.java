@@ -26,18 +26,30 @@
  */
 package nl.han.dare2date.service.web.applyregistration;
 
+import nl.han.dare2date.service.notifier.UserNotifier;
 import nl.han.dare2date.service.web.applyregistration.model.ApplyRegistrationResponse;
 import nl.han.dare2date.service.web.applyregistration.model.Registration;
 import nl.han.dare2date.service.web.applyregistration.model.User;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.easymock.EasyMock;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UserNotificationRouteTest extends CamelTestSupport {
+    private UserNotifier notifier;
+    private UserNotificationRoute current;
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new UserNotificationRoute();
+        current = new UserNotificationRoute();
+        return current;
+    }
+
+    @Before
+    public void before() {
+        notifier = EasyMock.createMock(UserNotifier.class);
     }
 
     @Test
@@ -52,11 +64,19 @@ public class UserNotificationRouteTest extends CamelTestSupport {
         Registration registration = new Registration();
         registration.setUser(new User());
 
+        notifier.notify(registration);
+
         ApplyRegistrationResponse request = new ApplyRegistrationResponse();
         request.setRegistration(registration);
+
+        EasyMock.replay(notifier);
+
+        current.setNotifier(notifier);
 
         template.sendBody("direct:sendfile", request);
 
         assertMockEndpointsSatisfied();
+
+        EasyMock.verify(notifier);
     }
 }
