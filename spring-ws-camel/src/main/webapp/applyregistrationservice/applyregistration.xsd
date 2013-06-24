@@ -7,7 +7,7 @@
     <xs:complexType name="Creditcard">
         <xs:sequence>
             <xs:element name="number" type="xs:long"/>
-            <xs:element name="cvc" type="xs:integer"/>
+            <xs:element name="cvc" type="xs:int"/>
             <xs:element name="validThrough" type="xs:dateTime"/>
         </xs:sequence>
     </xs:complexType>
