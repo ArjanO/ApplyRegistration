@@ -42,7 +42,7 @@ public class UserNotificationRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("activemq:topic:registered?jmsMessageType=Object&durableSubscriptionName=userNotification&clientId=12345").from("direct:sendfile")
+        from("activemq:topic:registered?jmsMessageType=Object&durableSubscriptionName=userNotification&clientId=12345").from("direct:usernotification")
                 .process(new Processor() {
                     public void process(Exchange exchange) throws Exception {
                         Registration r = exchange.getIn().getBody(ApplyRegistrationResponse.class).getRegistration();

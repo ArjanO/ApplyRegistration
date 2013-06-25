@@ -53,7 +53,7 @@ public class UserNotificationRouteTest extends CamelTestSupport {
     }
 
     @Test
-    public void testOutboxContainsFile() throws Exception {
+    public void testUserNotification() throws Exception {
         context.getRouteDefinitions().get(0).adviceWith(context, new AdviceWithRouteBuilder() {
             @Override
             public void configure() throws Exception {
@@ -73,7 +73,7 @@ public class UserNotificationRouteTest extends CamelTestSupport {
 
         current.setNotifier(notifier);
 
-        template.sendBody("direct:sendfile", request);
+        template.sendBody("direct:usernotification", request);
 
         assertMockEndpointsSatisfied();
 
