@@ -44,8 +44,10 @@ import java.util.List;
 public class CreditCardValidatorRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("activemq:queue:RequestQueue")
-            .process(new Validator());
+        from("activemq:queue:RequestQueue").from("direct:creditcard")
+            .process(new Validator())
+            .to("mock:result")
+            ;
 
     }
 
