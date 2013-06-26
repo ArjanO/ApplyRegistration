@@ -43,11 +43,11 @@ public class ApplyRegistrationRoute extends RouteBuilder {
         from("spring-ws:rootqname:{http://www.han.nl/schemas/messages}ApplyRegistrationRequest?endpointMapping=#applyRegistrationEndpointMapping")
                 .unmarshal(jaxb)
                 .to("activemq:queue:RequestQueue?jmsMessageType=Object")
-                .filter()
-                    .simple("${body.getRegistration.isSuccesFul}").inOnly("activemq:topic:registered?jmsMessageType=Object&disableReplyTo=true")
-                    .end()
                 .marshal(jaxb)
         ;
+        from("direct:applyregistration").filter()
+                .simple("${body.getRegistration.isSuccesFul}").inOnly("activemq:topic:registered?jmsMessageType=Object&disableReplyTo=true")
+                ;
     }
 
 }

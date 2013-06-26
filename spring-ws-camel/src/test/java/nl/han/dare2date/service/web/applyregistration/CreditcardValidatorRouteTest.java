@@ -41,7 +41,7 @@ public class CreditcardValidatorRouteTest extends CamelTestSupport {
         context.getRouteDefinitions().get(0).adviceWith(context, new AdviceWithRouteBuilder() {
             @Override
             public void configure() throws Exception {
-                mockEndpointsAndSkip("mock:result");
+                mockEndpointsAndSkip("direct:applyregistration");
             }
         });
 
@@ -58,7 +58,7 @@ public class CreditcardValidatorRouteTest extends CamelTestSupport {
 
         user.setCard(cc);
 
-        getMockEndpoint("mock:result").expectedMessageCount(1);
+        getMockEndpoint("mock:direct:applyregistration").expectedMessageCount(1);
 
         ApplyRegistrationResponse response = (ApplyRegistrationResponse)template.requestBody("direct:creditcard",
                 registrationRequest);
@@ -75,7 +75,7 @@ public class CreditcardValidatorRouteTest extends CamelTestSupport {
         context.getRouteDefinitions().get(0).adviceWith(context, new AdviceWithRouteBuilder() {
             @Override
             public void configure() throws Exception {
-                mockEndpointsAndSkip("mock:result");
+                mockEndpointsAndSkip("direct:applyregistration");
             }
         });
 
@@ -92,7 +92,7 @@ public class CreditcardValidatorRouteTest extends CamelTestSupport {
 
         user.setCard(cc);
 
-        getMockEndpoint("mock:result").expectedMessageCount(1);
+        getMockEndpoint("mock:direct:applyregistration").expectedMessageCount(1);
 
         ApplyRegistrationResponse response = (ApplyRegistrationResponse)template.requestBody("direct:creditcard",
                 registrationRequest);
@@ -109,7 +109,7 @@ public class CreditcardValidatorRouteTest extends CamelTestSupport {
         context.getRouteDefinitions().get(0).adviceWith(context, new AdviceWithRouteBuilder() {
             @Override
             public void configure() throws Exception {
-                mockEndpointsAndSkip("mock:result");
+                mockEndpointsAndSkip("direct:applyregistration");
             }
         });
 
@@ -126,7 +126,7 @@ public class CreditcardValidatorRouteTest extends CamelTestSupport {
 
         user.setCard(cc);
 
-        getMockEndpoint("mock:result").expectedMessageCount(1);
+        getMockEndpoint("mock:direct:applyregistration").expectedMessageCount(1);
 
         ApplyRegistrationResponse response = (ApplyRegistrationResponse)template.requestBody("direct:creditcard",
                 registrationRequest);

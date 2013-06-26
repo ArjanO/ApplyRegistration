@@ -46,7 +46,7 @@ public class CreditCardValidatorRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("activemq:queue:RequestQueue").from("direct:creditcard")
             .process(new Validator())
-            .to("mock:result")
+            .to("direct:applyregistration")
             ;
 
     }
