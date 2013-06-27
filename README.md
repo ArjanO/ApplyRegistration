@@ -1,4 +1,4 @@
-# JmsRegistration
+# Apply registration
 
 ## Authors
 
@@ -17,7 +17,7 @@ Add the folowing queues in the admin console:
 + ReplyQueue
 + InvalidQueue
 
-##Unit Testing
+## Unit Testing
 Make sure you're running ActiveMQ when unit testing.
 
 ## MIT License
